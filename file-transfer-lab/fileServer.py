@@ -32,8 +32,6 @@ print("connection rec'd from", addr)
 
 from labSocket import fileSend, receiveFile
 
-while True:
-    payload = receiveFile(sock)
-    payload += b"!"             # make emphatic!
-    fileSend(sock, payload)
 
+payload = receiveFile(sock)
+#fileSend(sock, payload)
