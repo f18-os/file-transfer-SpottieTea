@@ -13,7 +13,7 @@ def fileSend(sock, payload):
 
 
 
-def recieveFile(sock):
+def receiveFile(sock):
 
     fileopen = open("serverText.txt", "w")
     r = sock.recv(100)

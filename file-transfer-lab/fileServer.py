@@ -30,10 +30,10 @@ sock, addr = lsock.accept()
 print("connection rec'd from", addr)
 
 
-from labSocket import fileSend, receiveFIle
+from labSocket import fileSend, receiveFile
 
 while True:
-    payload = framedReceive(sock)
+    payload = receiveFile(sock)
     payload += b"!"             # make emphatic!
     fileSend(sock, payload)
 
