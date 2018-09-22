@@ -15,7 +15,6 @@ def fileSend(sock, payload):
 
 def recieveFile(sock):
 
-
-    fileopen = open("serverFile.txt","w")
+    fileopen = open("serverText.txt", "w")
     r = sock.recv(100)
     fileopen.write(r)
