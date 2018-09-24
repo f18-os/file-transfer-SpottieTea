@@ -8,7 +8,6 @@ def fileSend(sock, payload):
     lines = filein.readlines()
     for l in lines: #for each line, send over socket
         print(l)
-        print("\n")
         msg = l
         nsent = sock.send(msg)
 
