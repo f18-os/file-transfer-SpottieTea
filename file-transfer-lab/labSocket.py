@@ -23,7 +23,7 @@ def receiveFile(sock):
     fileopen.write(line)
     r = sock.recv(100)
     
-    while r:
+    while r: #With thanks to Taylor Dodson
         line = r.decode('ascii') #decode bytes
         print(line) #check if recieved
         fileopen.write(line) #write to file
