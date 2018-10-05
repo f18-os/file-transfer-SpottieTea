@@ -6,7 +6,7 @@ import socket, sys, re
 sys.path.append("../lib")       # for params
 import params
 
-from labSocket import fileSend, receiveFile
+from labSocket import framedSend, framedReceive
 
 
 switchesVarDefaults = (
@@ -57,6 +57,10 @@ if s is None:
     sys.exit(1)
 
 print("Sending file... \n")
-fileSend(s,"sampletext.txt")
+
+fileopen = open("sampletext.txt",'rb')
+
+for l in fileopen:
+    framedSend(s,l,debug)
 
                         

@@ -1,33 +1,42 @@
 import re
 
+def framedSend(sock, payload, debug=0):
+     if debug: print("framedSend: sending %d byte message" % len(payload))
+     msg = str(len(payload)).encode() + b':' + payload
+     while len(msg):
+         nsent = sock.send(msg)
+         msg = msg[nsent:]
+     
+rbuf = b""                      # static receive buffer
 
-
-def fileSend(sock, payload):
-
-    #nsent = sock.send(payload.encode())
-    filein = open(payload,"rb")
-    
-    lines = filein.readlines()
-    for l in lines: #for each line, send over socket
-        print(l)
-        msg = l
-        nsent = sock.send(msg)
-
-
-
-def receiveFile(sock):
-
-    r = sock.recv(100)
-    line = r.decode('ascii')
-    fileopen = open("serverText.txt","w")
-    fileopen.write(line)
-    r = sock.recv(100)
-    
-    while r: #With thanks to Taylor Dodson
-        line = r.decode('ascii') #decode bytes
-        print(line) #check if recieved
-        fileopen.write(line) #write to file
-        r = sock.recv(100)
+def framedReceive(sock, debug=0):
+    global rbuf
+    state = "getLength"
+    msgLength = -1
+    while True:
+         if (state == "getLength"):
+             match = re.match(b'([^:]+):(.*)', rbuf,re.DOTALL | re.MULTILINE) # look for colon
+             if match:
+                  lengthStr, rbuf = match.groups()
+                  try: 
+                       msgLength = int(lengthStr)
+                  except:
+                       if len(rbuf):
+                            print("badly formed message length:", lengthStr)
+                            return None
+                  state = "getPayload"
+         if state == "getPayload":
+             if len(rbuf) >= msgLength:
+                 payload = rbuf[0:msgLength]
+                 rbuf = rbuf[msgLength:]
+                 return payload
+         r = sock.recv(100)
+         rbuf += r
+         if len(r) == 0:
+             if len(rbuf) != 0:
+                 print("FramedReceive: incomplete message. \n  state=%s, length=%d, rbuf=%s" % (state, msgLength, rbuf))
+             return None
+         if debug: print("FramedReceive: state=%s, length=%d, rbuf=%s" % (state, msgLength, rbuf))
 
     
     

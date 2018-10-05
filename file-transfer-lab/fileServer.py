@@ -30,8 +30,12 @@ sock, addr = lsock.accept()
 print("connection rec'd from", addr)
 
 
-from labSocket import fileSend, receiveFile
+from labSocket import framedSend, framedReceive
 
+serverFile = open("servertext.txt","w")
+line = framedReceive(sock,debug)
 
-payload = receiveFile(sock)
-#fileSend(sock, payload)
+while line:
+    serverFile.write(line.decode('ascii'))
+    line = framedReceive(sock,debug)
+    
