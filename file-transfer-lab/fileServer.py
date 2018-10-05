@@ -42,4 +42,4 @@ while line:
     serverFile.write(line.decode('ascii'))
     line = framedReceive(sock,debug)
     
-serverFile.write("end of copy!")
+serverFile.write("End of copy!")

@@ -62,7 +62,7 @@ framedSend(s,nameFile.encode(),debug)
 
 print("Sending file... \n")
 
-fileopen = open("sampletext.txt",'rb')
+fileopen = open(nameFile,'rb')
 
 for l in fileopen:
     framedSend(s,l,debug)
