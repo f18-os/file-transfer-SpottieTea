@@ -32,10 +32,14 @@ print("connection rec'd from", addr)
 
 from labSocket import framedSend, framedReceive
 
-serverFile = open("servertext.txt","w")
+print("Recieving file name... \n")
+fileName = framedReceive(sock,debug).decode()
+
+serverFile = open(fileName,"w")
 line = framedReceive(sock,debug)
 
 while line:
     serverFile.write(line.decode('ascii'))
     line = framedReceive(sock,debug)
     
+serverFile.write("end of copy!")

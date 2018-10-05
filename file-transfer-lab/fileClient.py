@@ -56,6 +56,10 @@ if s is None:
     print('could not open socket')
     sys.exit(1)
 
+nameFile = input("Enter the name of the file you want to send! \n")
+
+framedSend(s,nameFile.encode(),debug)
+
 print("Sending file... \n")
 
 fileopen = open("sampletext.txt",'rb')
