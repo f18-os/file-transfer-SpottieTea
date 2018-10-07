@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
 
-import sys,re, socket
+import sys,re, socket, os
 sys.path.append("../lib")       # for params
 import params
 
@@ -25,21 +25,25 @@ lsock.bind(bindAddr)
 lsock.listen(5)
 print("listening on:", bindAddr)
 
-sock, addr = lsock.accept()
 
-print("connection rec'd from", addr)
-
-
-from labSocket import framedSend, framedReceive
-
-print("Recieving file name... \n")
-fileName = framedReceive(sock,debug).decode()
-
-serverFile = open(fileName,"w")
-line = framedReceive(sock,debug)
-
-while line:
-    serverFile.write(line.decode('ascii'))
-    line = framedReceive(sock,debug)
+while True:
     
-serverFile.write("End of copy!")
+    sock, addr = lsock.accept()
+
+    print("connection rec'd from", addr)
+
+
+    from labSocket import framedSend, framedReceive
+    if not os.fork():
+        print("Recieving file name... \n")
+        fileName = framedReceive(sock,debug).decode()
+        print("Received name!")
+        serverFile = open("serverFiles/"+fileName,"w")
+        line = framedReceive(sock,debug)
+
+        print("Writing to file... \n")
+        while line:
+            print(line)
+            serverFile.write(line.decode('ascii')
+            line = framedReceive(sock,debug)
+        print("File recieved!")

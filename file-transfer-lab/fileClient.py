@@ -65,6 +65,7 @@ print("Sending file... \n")
 fileopen = open(nameFile,'rb')
 
 for l in fileopen:
+    print(l)
     framedSend(s,l,debug)
 
                         
