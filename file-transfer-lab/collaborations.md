@@ -1,3 +1,3 @@
 # Credits
 
-Recieved tip on creating the while loop for receiveFIle from Taylor Dodson.
+Recieved tip on creating the while loop and fork for serverFile from Taylor Dodson.

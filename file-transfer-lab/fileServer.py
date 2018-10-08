@@ -44,6 +44,6 @@ while True:
         print("Writing to file... \n")
         while line:
             print(line)
-            serverFile.write(line.decode('ascii')
+            serverFile.write(line.decode('ascii'))
             line = framedReceive(sock,debug)
         print("File recieved!")
