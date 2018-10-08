@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
 # Echo client program
-import socket, sys, re
+import socket, sys, re, os.path
 
 sys.path.append("../lib")       # for params
 import params
@@ -58,6 +58,10 @@ if s is None:
 
 nameFile = input("Enter the name of the file you want to send! \n")
 
+while not os.path.isfile(nameFile):
+    nameFile = input("Please enter a valid file name: \n")
+
+
 framedSend(s,nameFile.encode(),debug)
 
 print("Sending file... \n")
@@ -65,7 +69,6 @@ print("Sending file... \n")
 fileopen = open(nameFile,'rb')
 
 for l in fileopen:
-    print(l)
     framedSend(s,l,debug)
 
                         
