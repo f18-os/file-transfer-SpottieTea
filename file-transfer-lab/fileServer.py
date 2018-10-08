@@ -32,7 +32,6 @@ while True:
 
     print("connection rec'd from", addr)
 
-
     from labSocket import framedSend, framedReceive
     if not os.fork():
         print("Recieving file name... \n")
